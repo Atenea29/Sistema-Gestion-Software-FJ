@@ -15,7 +15,7 @@ y colaboración equilibrada.
 
 ```bash
 git init
-git add main.py sistema_reservas.py excepciones.py logger_config.py README.md .gitignore
+git add *.py README.md .gitignore
 git commit -m "Commit inicial: estructura base del proyecto"
 git branch -M main
 git remote add origin https://github.com/USUARIO/sistema-reservas-excepciones.git
@@ -64,37 +64,22 @@ Evitar mensajes como `cambios`, `update` o `arreglo`.
 
 ## C – Reparto de tareas, ramas e issues
 
-| # | Integrante | Rama | Issue | Aporte concreto (que debe hacer con sus manos) |
+| # | Integrante | Rama | Issue | Aporte concreto |
 |---|---|---|---|---|
-| 1 | Integrante 1 | `feature/excepciones` | #1 Crear excepciones personalizadas | Escribir `excepciones.py`: clase base y 4 subclases, con comentarios. |
-| 2 | Integrante 2 | `feature/logging` | #2 Configurar logging a archivo | Escribir `logger_config.py` y revisar que `logs/sistema.log` se genere. |
-| 3 | Integrante 3 | `feature/validaciones` | #3 Validaciones y encadenamiento | Métodos `_validar_datos`, `_obtener_servicio`, `_llamar_proveedor`. |
-| 4 | Integrante 4 | `feature/reservas` | #4 Crear y cancelar reservas | `crear_reserva` y `cancelar_reserva` con `try/except/else/finally`. |
-| 5 | Integrante 5 | `feature/simulaciones` | #5 Simulaciones y pruebas | `main.py` con las 16 simulaciones y verificación del log. |
+| 1 | Integrante 1 | `feature/entidad-excepciones` | #1 Clase abstracta general y excepciones | `entidad.py` y `excepciones.py` |
+| 2 | Integrante 2 | `feature/cliente` | #2 Clase Cliente | `cliente.py`: atributos privados, propiedades y validaciones |
+| 3 | Integrante 3 | `feature/servicio-sala` | #3 Servicio abstracto y reserva de salas | `servicio.py` y `servicio_sala.py` con costo sobrecargado |
+| 4 | Integrante 4 | `feature/equipo-asesoria` | #4 Alquiler de equipos y asesorías | `servicio_equipo.py` y `servicio_asesoria.py` |
+| 5 | Integrante 5 | `feature/reserva-sistema` | #5 Reserva, sistema, logging y simulaciones | `reserva.py`, `sistema_reservas.py`, `logger_config.py`, `main.py` |
 | Todos | — | — | #6 Documento PDF final | Portada, introducción, enlace, conclusiones y referencias APA. |
 
 ### Texto sugerido para cada issue (copiar y pegar)
 
-**#1 Crear excepciones personalizadas** — Crear `excepciones.py` con la clase base
-`ErrorReservas` y las subclases `DatosInvalidosError`, `ServicioNoDisponibleError`,
-`ReservaInvalidaError` y `ReservaNoEncontradaError`. Criterio: cada una con código propio
-y comentarios explicativos. *Asignado a: Integrante 1.*
-
-**#2 Configurar logging a archivo** — Crear `logger_config.py` para que todos los eventos
-y errores se escriban en `logs/sistema.log` con fecha, nivel, función y mensaje.
-Criterio: el archivo se genera al ejecutar el programa. *Asignado a: Integrante 2.*
-
-**#3 Validaciones y encadenamiento de excepciones** — Implementar la validación de nombre,
-personas y fecha; la búsqueda de servicio y la consulta al proveedor. Criterio: usar
-`raise ... from error` para conservar la causa original. *Asignado a: Integrante 3.*
-
-**#4 Crear y cancelar reservas** — Implementar `crear_reserva` y `cancelar_reserva` con
-`try/except/else/finally`, reglas de negocio (fecha pasada, capacidad, duplicadas) y
-registro en el log. *Asignado a: Integrante 4.*
-
-**#5 Simulaciones y pruebas** — Implementar `main.py` con mínimo 10 simulaciones (válidas
-e inválidas) y una red de seguridad para errores inesperados. Criterio: el programa
-termina sin caerse y el log registra todo. *Asignado a: Integrante 5.*
+**#1** — Crear la clase abstracta `Entidad` y la jerarquía de excepciones personalizadas.
+**#2** — Crear `Cliente` con encapsulación y validaciones de nombre, documento, correo y teléfono.
+**#3** — Crear la clase abstracta `Servicio` y `ReservaSala` con `calcular_costo` sobrecargado.
+**#4** — Crear `AlquilerEquipo` y `AsesoriaEspecializada` con `calcular_costo` sobrecargado.
+**#5** — Crear la clase `Reserva` (confirmar, cancelar, procesar), el sistema con listas internas, el logging y mínimo 10 simulaciones.
 
 **#6 Documento PDF final** — Elaborar el PDF con portada, introducción, enlace del
 repositorio, conclusiones y referencias en APA. *Asignado a: todos.*

@@ -1,73 +1,130 @@
-"""Ejecuta 16 simulaciones (válidas e inválidas) sobre el sistema de reservas."""
+"""Simula 35 operaciones (válidas e inválidas) del sistema de Software FJ."""
 
-from datetime import date, timedelta  # Para generar fechas relativas a hoy
+from datetime import date, timedelta  # Fechas relativas a hoy
 
+from cliente import Cliente
+from entidad import Entidad
 from excepciones import ErrorReservas  # Excepción base del sistema
 from logger_config import obtener_logger
-from sistema_reservas import Servicio, SistemaReservas
+from reserva import Reserva
+from servicio import Servicio
+from servicio_asesoria import AsesoriaEspecializada
+from servicio_equipo import AlquilerEquipo
+from servicio_sala import ReservaSala
+from sistema_reservas import SistemaReservas
 
 log = obtener_logger()  # Mismo logger que usa el sistema
 
 
 def ejecutar(numero, descripcion, funcion, resultados):
-    """Ejecuta una simulación sin permitir que un error detenga el programa."""
+    """Ejecuta una operación sin permitir que un error detenga el programa."""
     log.info("--- Simulación %02d: %s ---", numero, descripcion)
     try:
-        funcion()  # Corre la simulación
+        resultado = funcion()  # Corre la simulación
     except ErrorReservas as error:
-        estado, detalle = "ERROR CONTROLADO", str(error)  # Error esperado del sistema
+        if not error.registrado:  # Si aún no está en el log, se registra aquí
+            log.error("Error controlado: %s", error, exc_info=bool(error.__cause__))
+        estado, detalle = "ERROR CONTROLADO", str(error)
     except Exception as error:  # Red de seguridad para errores no previstos
         log.critical("Error inesperado en simulación %02d", numero, exc_info=True)
         estado, detalle = "ERROR INESPERADO", f"{type(error).__name__}: {error}"
     else:
-        estado, detalle = "OK", "Operación exitosa"
+        estado = "OK"
+        if isinstance(resultado, Reserva):
+            detalle = resultado.describir()
+        elif isinstance(resultado, Entidad):
+            detalle = resultado.describir()
+        else:
+            detalle = "Operación exitosa"
     finally:
         log.info("--- Fin simulación %02d ---", numero)
-    resultados.append((numero, descripcion, estado))  # Guarda el resultado
-    print(f"{numero:02d}. {descripcion:<45} -> {estado}: {detalle}")
+    resultados.append((numero, descripcion, estado))
+    print(f"{numero:02d}. {descripcion:<50} -> {estado}: {detalle}")
+
+
+def instanciar_abstracta():
+    """Intenta crear un Servicio directamente: Python lo impide por ser abstracta."""
+    try:
+        Servicio(99, "Servicio genérico", 1000)  # TypeError: clase abstracta
+    except TypeError as error:
+        raise ErrorReservas("Servicio es abstracta y no se puede instanciar") from error
 
 
 def main():
     """Prepara el sistema y corre todas las simulaciones."""
-    sistema = SistemaReservas([
-        Servicio(1, "Restaurante", 10),
-        Servicio(2, "Hotel", 6),
-        Servicio(3, "Spa", 4),
-        Servicio(4, "Cine", 50, disponible=False),  # Fuera de servicio
-        Servicio(5, "Tour guiado", 15),  # Su proveedor estará caído
-    ])
-    sistema.proveedores_caidos.add(5)  # Simula caída del proveedor del tour
+    sistema = SistemaReservas()
+    sistema.registrar_cliente(Cliente(1, "Ana Pérez", "10203040", "ana@correo.com", "3001234567"))
+    sistema.registrar_cliente(Cliente(2, "Luis Gómez", "55667788", "luis@correo.com", "3109876543"))
+    sala = ReservaSala(1, "Sala de juntas A", 40000, capacidad=10)  # $40.000 por hora
+    equipo = AlquilerEquipo(2, "Portátil", 25000, stock=5)  # $25.000 por día y unidad
+    asesoria = AsesoriaEspecializada(3, "Asesoría en Python", 90000)  # $90.000 por hora
+    apagado = ReservaSala(4, "Sala B (en mantenimiento)", 30000, capacidad=6, disponible=False)
+    remota = AsesoriaEspecializada(5, "Asesoría externa", 80000)  # Proveedor caído
+    for servicio in (sala, equipo, asesoria, apagado, remota):
+        sistema.registrar_servicio(servicio)
+    sistema.proveedores_caidos.add(5)
+
     hoy = date.today()
-    manana = (hoy + timedelta(days=1)).isoformat()  # Fecha futura válida
-    en_3 = (hoy + timedelta(days=3)).isoformat()
-    ayer = (hoy - timedelta(days=1)).isoformat()  # Fecha pasada
-    resultados = []
+    f1, f2, f3, f4 = [(hoy + timedelta(days=d)).isoformat() for d in (1, 2, 3, 4)]
+    ayer = (hoy - timedelta(days=1)).isoformat()
+    cr = sistema.crear_reserva  # Atajo: crear_reserva(cliente, servicio, fecha, duracion, *opciones)
 
     simulaciones = [
-        ("Reserva válida (restaurante)", lambda: sistema.crear_reserva("Ana", 2, manana, 1)),
-        ("Reserva válida (hotel)", lambda: sistema.crear_reserva("Luis", 4, en_3, 2)),
-        ("Reserva válida (spa)", lambda: sistema.crear_reserva("Marta", 1, en_3, 3)),
-        ("Nombre de cliente vacío", lambda: sistema.crear_reserva("  ", 2, manana, 1)),
-        ("Personas no numéricas ('abc')", lambda: sistema.crear_reserva("Pedro", "abc", manana, 1)),
-        ("Fecha con formato incorrecto", lambda: sistema.crear_reserva("Pedro", 2, "31/12/2026", 1)),
-        ("Fecha pasada", lambda: sistema.crear_reserva("Pedro", 2, ayer, 1)),
-        ("Supera la capacidad del spa", lambda: sistema.crear_reserva("Pedro", 9, manana, 3)),
-        ("Servicio inexistente (id 99)", lambda: sistema.crear_reserva("Pedro", 2, manana, 99)),
-        ("Servicio fuera de servicio (cine)", lambda: sistema.crear_reserva("Pedro", 2, manana, 4)),
-        ("Proveedor caído (tour)", lambda: sistema.crear_reserva("Pedro", 2, manana, 5)),
-        ("Reserva duplicada (Ana)", lambda: sistema.crear_reserva("Ana", 2, manana, 1)),
+        # --- Clientes ---
+        ("Registrar cliente válido (Carlos Ruiz)",
+         lambda: sistema.registrar_cliente(Cliente(3, "Carlos Ruiz", "99887766", "carlos@correo.com", "3201112233"))),
+        ("Cliente con nombre inválido ('A1')", lambda: Cliente(4, "A1", "123456", "a@b.com", "3001112233")),
+        ("Cliente con correo inválido", lambda: Cliente(4, "Marta Díaz", "123456", "sin-arroba", "3001112233")),
+        ("Cliente con teléfono inválido", lambda: Cliente(4, "Marta Díaz", "123456", "m@b.com", "12345")),
+        ("Cliente con documento inválido", lambda: Cliente(4, "Marta Díaz", "12ab", "m@b.com", "3001112233")),
+        ("Registrar cliente con id repetido",
+         lambda: sistema.registrar_cliente(Cliente(1, "Otra Persona", "11223344", "o@b.com", "3001112233"))),
+        # --- Servicios ---
+        ("Crear servicio válido (Proyector)",
+         lambda: sistema.registrar_servicio(AlquilerEquipo(6, "Proyector", 40000, stock=3))),
+        ("Crear servicio con tarifa negativa", lambda: ReservaSala(7, "Sala C", -100, capacidad=5)),
+        ("Crear servicio con nombre vacío", lambda: AsesoriaEspecializada(8, "   ", 50000)),
+        ("Crear servicio con tarifa como texto", lambda: AlquilerEquipo(9, "Tablet", "barata", stock=2)),
+        ("Instanciar la clase abstracta Servicio", instanciar_abstracta),
+        # --- Reservas exitosas (las tres formas de sobrecarga) ---
+        ("Sala: 2 horas (1 argumento)", lambda: cr(1, 1, f1, 2)),
+        ("Sala: 3 h con 10 % descuento (2 argumentos)", lambda: cr(2, 1, f2, 3, 0.10)),
+        ("Sala: 4 h, 10 % desc. e IVA 19 % (3 argumentos)", lambda: cr(1, 1, f3, 4, 0.10, 0.19)),
+        ("Equipo: 3 días, 2 unidades, con seguro", lambda: cr(1, 2, f1, 3, 2, True)),
+        ("Asesoría: 2 h, nivel experto, urgente", lambda: cr(2, 3, f1, 2, "experto", True)),
+        # --- Parámetros inválidos ---
+        ("Sala: horas negativas", lambda: cr(1, 1, f4, -2)),
+        ("Sala: más de 12 horas", lambda: cr(1, 1, f4, 15)),
+        ("Sala: descuento fuera de rango (150 %)", lambda: cr(1, 1, f4, 2, 1.5)),
+        ("Sala: 4 argumentos (sobrecarga inexistente)", lambda: cr(1, 1, f4, 2, 0.1, 0.19, 5)),
+        ("Sala: horas como texto ('dos')", lambda: cr(1, 1, f4, "dos")),
+        ("Equipo: stock insuficiente (10 de 5)", lambda: cr(1, 2, f4, 2, 10)),
+        ("Asesoría: nivel desconocido ('gurú')", lambda: cr(1, 3, f4, 2, "gurú")),
+        # --- Reservas fallidas por otras reglas ---
+        ("Fecha con formato incorrecto", lambda: cr(1, 1, "31/12/2026", 2)),
+        ("Fecha pasada", lambda: cr(1, 1, ayer, 2)),
+        ("Servicio inexistente (id 99)", lambda: cr(1, 99, f4, 2)),
+        ("Cliente no registrado (id 77)", lambda: cr(77, 1, f4, 2)),
+        ("Servicio fuera de servicio", lambda: cr(1, 4, f4, 2)),
+        ("Proveedor externo caído", lambda: cr(1, 5, f4, 2)),
+        ("Reserva duplicada (Ana, sala, mismo día)", lambda: cr(1, 1, f1, 2)),
+        # --- Cancelaciones y fallo inesperado ---
         ("Cancelar reserva existente (#1)", lambda: sistema.cancelar_reserva(1)),
         ("Cancelar reserva inexistente (#42)", lambda: sistema.cancelar_reserva(42)),
         ("Cancelar reserva ya cancelada (#1)", lambda: sistema.cancelar_reserva(1)),
+        ("Reserva nueva tras cancelar (misma sala y día)", lambda: cr(1, 1, f1, 1)),
         ("Fallo inesperado (división por cero)", lambda: 1 / 0),
     ]
 
     print("=== SIMULACIONES ===")
+    resultados = []
     for numero, (descripcion, funcion) in enumerate(simulaciones, start=1):
         ejecutar(numero, descripcion, funcion, resultados)
 
     ok = sum(1 for _, _, e in resultados if e == "OK")
     print(f"\nTotal: {len(resultados)} | Exitosas: {ok} | Con error: {len(resultados) - ok}")
+    print(f"Clientes: {len(sistema.clientes)} | Servicios: {len(sistema.servicios)} | "
+          f"Reservas en lista: {len(sistema.reservas)}")
     print("La aplicación terminó de forma estable. Revisa logs/sistema.log")
 
 

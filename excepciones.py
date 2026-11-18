@@ -1,4 +1,4 @@
-"""Excepciones personalizadas del sistema de reservas."""
+"""Excepciones personalizadas del sistema de Software FJ."""
 
 
 class ErrorReservas(Exception):
@@ -8,6 +8,7 @@ class ErrorReservas(Exception):
         super().__init__(mensaje)  # Guarda el mensaje en la clase Exception
         self.mensaje = mensaje  # Mensaje legible para el usuario
         self.codigo = codigo  # Código corto para identificar el tipo de error
+        self.registrado = False  # Indica si ya se escribió en el log (evita duplicados)
 
     def __str__(self):
         # Formato uniforme para consola y log: [CODIGO] mensaje
@@ -15,28 +16,56 @@ class ErrorReservas(Exception):
 
 
 class DatosInvalidosError(ErrorReservas):
-    """Se lanza cuando los datos ingresados (nombre, fecha, personas) son erróneos."""
+    """Datos erróneos de un cliente o de una fecha (nombre, correo, teléfono, etc.)."""
 
     def __init__(self, mensaje):
         super().__init__(mensaje, codigo="DATOS_INVALIDOS")
 
 
+class ParametroInvalidoError(ErrorReservas):
+    """Parámetros incorrectos al calcular un costo (tipo, rango o cantidad de argumentos)."""
+
+    def __init__(self, mensaje):
+        super().__init__(mensaje, codigo="PARAMETRO_INVALIDO")
+
+
 class ServicioNoDisponibleError(ErrorReservas):
-    """Se lanza cuando el servicio no existe, está inactivo o su proveedor no responde."""
+    """El servicio no existe, está inactivo o su proveedor no responde."""
 
     def __init__(self, mensaje):
         super().__init__(mensaje, codigo="SERVICIO_NO_DISPONIBLE")
 
 
 class ReservaInvalidaError(ErrorReservas):
-    """Se lanza cuando la reserva incumple una regla de negocio (fecha pasada, cupo, duplicada)."""
+    """La reserva incumple una regla de negocio (fecha pasada, stock, duplicada)."""
 
     def __init__(self, mensaje):
         super().__init__(mensaje, codigo="RESERVA_INVALIDA")
 
 
 class ReservaNoEncontradaError(ErrorReservas):
-    """Se lanza cuando se intenta operar sobre una reserva que no existe."""
+    """Se intenta operar sobre una reserva que no existe."""
 
     def __init__(self, mensaje):
         super().__init__(mensaje, codigo="RESERVA_NO_ENCONTRADA")
+
+
+class OperacionNoPermitidaError(ErrorReservas):
+    """Se intenta una operación que el estado actual no permite (ej. confirmar una reserva cancelada)."""
+
+    def __init__(self, mensaje):
+        super().__init__(mensaje, codigo="OPERACION_NO_PERMITIDA")
+
+
+class CalculoInconsistenteError(ErrorReservas):
+    """El cálculo de un costo produjo un resultado imposible (infinito, NaN, cero o negativo)."""
+
+    def __init__(self, mensaje):
+        super().__init__(mensaje, codigo="CALCULO_INCONSISTENTE")
+
+
+class ClienteNoEncontradoError(ErrorReservas):
+    """Se intenta operar con un cliente que no está registrado."""
+
+    def __init__(self, mensaje):
+        super().__init__(mensaje, codigo="CLIENTE_NO_ENCONTRADO")
