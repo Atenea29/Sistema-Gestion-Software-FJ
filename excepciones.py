@@ -69,3 +69,12 @@ class ClienteNoEncontradoError(ErrorReservas):
 
     def __init__(self, mensaje):
         super().__init__(mensaje, codigo="CLIENTE_NO_ENCONTRADO")
+class ClienteInvalidoError(DatosInvalidosError):
+    """Datos personales inválidos de un cliente (nombre, documento, correo o teléfono).
+
+    Hereda de DatosInvalidosError: cualquier 'except DatosInvalidosError' también la captura,
+    pero su código propio (CLIENTE_INVALIDO) permite distinguirla en el log."""
+
+    def __init__(self, mensaje):
+        super().__init__(mensaje)  # Reutiliza la inicialización de DatosInvalidosError
+        self.codigo = "CLIENTE_INVALIDO"  # Código propio para identificarla en el log

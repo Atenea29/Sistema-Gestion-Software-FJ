@@ -26,3 +26,14 @@ class Entidad(ABC):
     def __str__(self):
         # Polimorfismo: str(objeto) usa la descripción de la subclase concreta
         return self.describir()
+    def __eq__(self, otro):
+        # Dos entidades son iguales si son del mismo tipo y tienen el mismo id
+        return type(self) is type(otro) and self._id == otro._id
+
+    def __hash__(self):
+        # Necesario al definir __eq__: permite usar entidades en sets y diccionarios
+        return hash((type(self).__name__, self._id))
+
+    def __repr__(self):
+        # Representación técnica, útil al depurar: Cliente(id=1)
+        return f"{type(self).__name__}(id={self._id})"
