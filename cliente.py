@@ -3,7 +3,7 @@
 import re  # Expresiones regulares para validar correo y teléfono
 
 from entidad import Entidad  # Clase abstracta general
-from excepciones import DatosInvalidosError  # Error por datos inválidos
+from excepciones import ClienteInvalidoError  # Error específico de datos de cliente
 
 
 class Cliente(Entidad):
@@ -26,9 +26,9 @@ class Cliente(Entidad):
     def nombre(self, valor):
         # Mínimo 3 caracteres, solo letras y espacios (incluye tildes y ñ)
         if not isinstance(valor, str) or not re.fullmatch(r"[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,60}", valor.strip()):
-            raise DatosInvalidosError(f"Nombre inválido: {valor!r} (3 a 60 letras)")
+            raise ClienteInvalidoError(f"Nombre inválido: {valor!r} (3 a 60 letras)")
         if "  " in valor.strip():  # Dos o más espacios seguidos dentro del nombre
-            raise DatosInvalidosError(f"Nombre inválido: {valor!r} (no se permiten espacios dobles)")
+            raise ClienteInvalidoError(f"Nombre inválido: {valor!r} (no se permiten espacios dobles)")
         self.__nombre = valor.strip().title()  # Se normaliza a formato Título
 
     # ---- documento ----------------------------------------------------
@@ -40,7 +40,7 @@ class Cliente(Entidad):
     def documento(self, valor):
         # Solo dígitos, entre 5 y 12
         if not isinstance(valor, str) or not re.fullmatch(r"\d{5,12}", valor):
-            raise DatosInvalidosError(f"Documento inválido: {valor!r} (5 a 12 dígitos)")
+            raise ClienteInvalidoError(f"Documento inválido: {valor!r} (5 a 12 dígitos)")
         self.__documento = valor
 
     # ---- correo -------------------------------------------------------
@@ -52,12 +52,12 @@ class Cliente(Entidad):
     def correo(self, valor):
         # Formato básico usuario@dominio.ext
         if not isinstance(valor, str) or not re.fullmatch(r"[\w.+-]+@[\w-]+(\.[\w-]+)+", valor):
-            raise DatosInvalidosError(f"Correo inválido: {valor!r}")
+            raise ClienteInvalidoError(f"Correo inválido: {valor!r}")
         usuario = valor.split("@")[0]  # Parte anterior a la arroba
         if ".." in valor or usuario.startswith(".") or usuario.endswith("."):
-            raise DatosInvalidosError(f"Correo inválido: {valor!r} (puntos mal ubicados)")
+            raise ClienteInvalidoError(f"Correo inválido: {valor!r} (puntos mal ubicados)")
         if len(valor) > 60:  # Límite razonable de longitud
-            raise DatosInvalidosError(f"Correo inválido: supera los 60 caracteres ({len(valor)})")
+            raise ClienteInvalidoError(f"Correo inválido: supera los 60 caracteres ({len(valor)})")
         self.__correo = valor.lower()
 
     # ---- teléfono -----------------------------------------------------
@@ -69,7 +69,7 @@ class Cliente(Entidad):
     def telefono(self, valor):
         # Celular colombiano: 10 dígitos que empiezan por 3
         if not isinstance(valor, str) or not re.fullmatch(r"3\d{9}", valor):
-            raise DatosInvalidosError(f"Teléfono inválido: {valor!r} (10 dígitos, inicia en 3)")
+            raise ClienteInvalidoError(f"Teléfono inválido: {valor!r} (10 dígitos, inicia en 3)")
         self.__telefono = valor
 
     def correo_enmascarado(self):
