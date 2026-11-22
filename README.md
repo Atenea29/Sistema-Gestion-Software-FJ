@@ -64,11 +64,11 @@ Hay 35 simulaciones en `main.py`: registro válido e inválido de clientes (nomb
 
 | Integrante | Rama | Responsabilidad |
 |---|---|---|
-| Integrante 1 (nombre) | `feature/entidad-excepciones` | `entidad.py`, `excepciones.py` |
-| Integrante 2 (nombre) | `feature/cliente` | `cliente.py` (encapsulación y validaciones) |
-| Integrante 3 (nombre) | `feature/servicio-sala` | `servicio.py` y `servicio_sala.py` |
-| Integrante 4 (nombre) | `feature/equipo-asesoria` | `servicio_equipo.py` y `servicio_asesoria.py` |
-| Integrante 5 (nombre) | `feature/reserva-sistema` | `reserva.py`, `sistema_reservas.py`, `main.py`, `logger_config.py` |
+| Integrante 1 Jose Paz | `feature/entidad-excepciones` | `entidad.py`, `excepciones.py` |
+| Integrante 2 Jose Paz | `feature/cliente` | `cliente.py` (encapsulación y validaciones) |
+| Integrante 3 Nancy Molina | `feature/servicio-sala` | `servicio.py` y `servicio_sala.py` |
+| Integrante 4 Jose Perez | `feature/equipo-asesoria` | `servicio_equipo.py` y `servicio_asesoria.py` |
+| Integrante 5 Juan Rosero | `feature/reserva-sistema` | `reserva.py`, `sistema_reservas.py`, `main.py`, `logger_config.py` |
 
 ## Flujo de trabajo en GitHub
 
