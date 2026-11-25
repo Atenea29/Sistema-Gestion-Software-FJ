@@ -1,0 +1,478 @@
+2026-11-22 17:40:15,206 | INFO     | __init__ | Sistema iniciado
+2026-11-22 17:40:15,206 | INFO     | registrar_cliente | Cliente registrado: Cliente #1: Ana Pérez (doc. 10203040)
+2026-11-22 17:40:15,206 | INFO     | registrar_cliente | Cliente registrado: Cliente #2: Luis Gómez (doc. 55667788)
+2026-11-22 17:40:15,206 | INFO     | registrar_servicio | Servicio registrado: Sala: Sala de juntas A (tarifa base $40,000.00, disponible), capacidad 10 personas
+2026-11-22 17:40:15,207 | INFO     | registrar_servicio | Servicio registrado: Equipo: Portátil (tarifa base $25,000.00, disponible), stock 5 unidades
+2026-11-22 17:40:15,207 | INFO     | registrar_servicio | Servicio registrado: Asesoria: Asesoría en Python (tarifa base $90,000.00, disponible)
+2026-11-22 17:40:15,207 | INFO     | registrar_servicio | Servicio registrado: Sala: Sala B (en mantenimiento) (tarifa base $30,000.00, fuera de servicio), capacidad 6 personas
+2026-11-22 17:40:15,207 | INFO     | registrar_servicio | Servicio registrado: Asesoria: Asesoría externa (tarifa base $80,000.00, disponible)
+2026-11-22 17:40:15,207 | INFO     | ejecutar | --- Simulación 01: Registrar cliente válido (Carlos Ruiz) ---
+2026-11-22 17:40:15,207 | INFO     | registrar_cliente | Cliente registrado: Cliente #3: Carlos Ruiz (doc. 99887766)
+2026-11-22 17:40:15,207 | INFO     | ejecutar | --- Fin simulación 01 ---
+2026-11-22 17:40:15,207 | INFO     | ejecutar | --- Simulación 02: Cliente con nombre inválido ('A1') ---
+2026-11-22 17:40:15,207 | ERROR    | ejecutar | Error controlado: [CLIENTE_INVALIDO] Nombre inválido: 'A1' (3 a 60 letras)
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Fin simulación 02 ---
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Simulación 03: Cliente con correo inválido ---
+2026-11-22 17:40:15,208 | ERROR    | ejecutar | Error controlado: [CLIENTE_INVALIDO] Correo inválido: 'sin-arroba'
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Fin simulación 03 ---
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Simulación 04: Cliente con teléfono inválido ---
+2026-11-22 17:40:15,208 | ERROR    | ejecutar | Error controlado: [CLIENTE_INVALIDO] Teléfono inválido: '12345' (10 dígitos, inicia en 3)
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Fin simulación 04 ---
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Simulación 05: Cliente con documento inválido ---
+2026-11-22 17:40:15,208 | ERROR    | ejecutar | Error controlado: [CLIENTE_INVALIDO] Documento inválido: '12ab' (5 a 12 dígitos)
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Fin simulación 05 ---
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Simulación 06: Registrar cliente con id repetido ---
+2026-11-22 17:40:15,208 | ERROR    | ejecutar | Error controlado: [DATOS_INVALIDOS] Ya existe un cliente con id 1
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Fin simulación 06 ---
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Simulación 07: Crear servicio válido (Proyector) ---
+2026-11-22 17:40:15,208 | INFO     | registrar_servicio | Servicio registrado: Equipo: Proyector (tarifa base $40,000.00, disponible), stock 3 unidades
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Fin simulación 07 ---
+2026-11-22 17:40:15,208 | INFO     | ejecutar | --- Simulación 08: Crear servicio con tarifa negativa ---
+2026-11-22 17:40:15,209 | ERROR    | ejecutar | Error controlado: [PARAMETRO_INVALIDO] 'tarifa_base' debe ser mayor que cero, llegó -100
+2026-11-22 17:40:15,209 | INFO     | ejecutar | --- Fin simulación 08 ---
+2026-11-22 17:40:15,209 | INFO     | ejecutar | --- Simulación 09: Crear servicio con nombre vacío ---
+2026-11-22 17:40:15,209 | ERROR    | ejecutar | Error controlado: [DATOS_INVALIDOS] El nombre del servicio es obligatorio
+2026-11-22 17:40:15,209 | INFO     | ejecutar | --- Fin simulación 09 ---
+2026-11-22 17:40:15,209 | INFO     | ejecutar | --- Simulación 10: Crear servicio con tarifa como texto ---
+2026-11-22 17:40:15,209 | ERROR    | ejecutar | Error controlado: [DATOS_INVALIDOS] 'tarifa_dia' debe ser numérico, llegó 'barata'
+2026-11-22 17:40:15,209 | INFO     | ejecutar | --- Fin simulación 10 ---
+2026-11-22 17:40:15,209 | INFO     | ejecutar | --- Simulación 11: Instanciar la clase abstracta Servicio ---
+2026-11-22 17:40:15,209 | ERROR    | ejecutar | Error controlado: [ERR_GENERAL] Servicio es abstracta y no se puede instanciar
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\main.py", line 48, in instanciar_abstracta
+    Servicio(99, "Servicio genérico", 1000)  # TypeError: clase abstracta
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Can't instantiate abstract class Servicio without an implementation for abstract methods 'calcular_costo', 'validar_parametros'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\main.py", line 23, in ejecutar
+    resultado = funcion()  # Corre la simulación
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\main.py", line 50, in instanciar_abstracta
+    raise ErrorReservas("Servicio es abstracta y no se puede instanciar") from error  # Convierte y encadena el error
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+excepciones.ErrorReservas: [ERR_GENERAL] Servicio es abstracta y no se puede instanciar
+2026-11-22 17:40:15,367 | INFO     | ejecutar | --- Fin simulación 11 ---
+2026-11-22 17:40:15,367 | INFO     | ejecutar | --- Simulación 12: Sala: 2 horas (1 argumento) ---
+2026-11-22 17:40:15,432 | INFO     | confirmar | Reserva #1 confirmada: Ana Pérez en 'Sala de juntas A' el 2026-11-23, costo $80,000.00
+2026-11-22 17:40:15,432 | DEBUG    | confirmar | Confirmación de reserva #1 finalizada
+2026-11-22 17:40:15,433 | DEBUG    | crear_reserva | Intento de reserva #1 finalizado
+2026-11-22 17:40:15,433 | INFO     | ejecutar | --- Fin simulación 12 ---
+2026-11-22 17:40:15,433 | INFO     | ejecutar | --- Simulación 13: Sala: 3 h con 10 % descuento (2 argumentos) ---
+2026-11-22 17:40:15,433 | INFO     | confirmar | Reserva #2 confirmada: Luis Gómez en 'Sala de juntas A' el 2026-11-24, costo $108,000.00
+2026-11-22 17:40:15,433 | DEBUG    | confirmar | Confirmación de reserva #2 finalizada
+2026-11-22 17:40:15,433 | DEBUG    | crear_reserva | Intento de reserva #2 finalizado
+2026-11-22 17:40:15,433 | INFO     | ejecutar | --- Fin simulación 13 ---
+2026-11-22 17:40:15,433 | INFO     | ejecutar | --- Simulación 14: Sala: 4 h, 10 % desc. e IVA 19 % (3 argumentos) ---
+2026-11-22 17:40:15,433 | INFO     | confirmar | Reserva #3 confirmada: Ana Pérez en 'Sala de juntas A' el 2026-11-25, costo $171,360.00
+2026-11-22 17:40:15,433 | DEBUG    | confirmar | Confirmación de reserva #3 finalizada
+2026-11-22 17:40:15,433 | DEBUG    | crear_reserva | Intento de reserva #3 finalizado
+2026-11-22 17:40:15,433 | INFO     | ejecutar | --- Fin simulación 14 ---
+2026-11-22 17:40:15,434 | INFO     | ejecutar | --- Simulación 15: Equipo: 3 días, 2 unidades, con seguro ---
+2026-11-22 17:40:15,434 | INFO     | confirmar | Reserva #4 confirmada: Ana Pérez en 'Portátil' el 2026-11-23, costo $165,000.00
+2026-11-22 17:40:15,434 | DEBUG    | confirmar | Confirmación de reserva #4 finalizada
+2026-11-22 17:40:15,434 | DEBUG    | crear_reserva | Intento de reserva #4 finalizado
+2026-11-22 17:40:15,434 | INFO     | ejecutar | --- Fin simulación 15 ---
+2026-11-22 17:40:15,434 | INFO     | ejecutar | --- Simulación 16: Asesoría: 2 h, nivel experto, urgente ---
+2026-11-22 17:40:15,434 | INFO     | confirmar | Reserva #5 confirmada: Luis Gómez en 'Asesoría en Python' el 2026-11-23, costo $450,000.00
+2026-11-22 17:40:15,434 | DEBUG    | confirmar | Confirmación de reserva #5 finalizada
+2026-11-22 17:40:15,434 | DEBUG    | crear_reserva | Intento de reserva #5 finalizado
+2026-11-22 17:40:15,434 | INFO     | ejecutar | --- Fin simulación 16 ---
+2026-11-22 17:40:15,434 | INFO     | ejecutar | --- Simulación 17: Sala: horas negativas ---
+2026-11-22 17:40:15,434 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] 'horas' debe ser mayor que cero, llegó -2
+2026-11-22 17:40:15,434 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-22 17:40:15,435 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-22 17:40:15,435 | DEBUG    | crear_reserva | Intento de reserva #6 finalizado
+2026-11-22 17:40:15,435 | INFO     | ejecutar | --- Fin simulación 17 ---
+2026-11-22 17:40:15,435 | INFO     | ejecutar | --- Simulación 18: Sala: más de 12 horas ---
+2026-11-22 17:40:15,435 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] 'horas' no puede superar 12, llegó 15
+2026-11-22 17:40:15,435 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-22 17:40:15,435 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-22 17:40:15,435 | DEBUG    | crear_reserva | Intento de reserva #7 finalizado
+2026-11-22 17:40:15,435 | INFO     | ejecutar | --- Fin simulación 18 ---
+2026-11-22 17:40:15,435 | INFO     | ejecutar | --- Simulación 19: Sala: descuento fuera de rango (150 %) ---
+2026-11-22 17:40:15,435 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] 'descuento' debe estar entre 0 y 1, llegó 1.5
+2026-11-22 17:40:15,435 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-22 17:40:15,435 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-22 17:40:15,435 | DEBUG    | crear_reserva | Intento de reserva #8 finalizado
+2026-11-22 17:40:15,436 | INFO     | ejecutar | --- Fin simulación 19 ---
+2026-11-22 17:40:15,436 | INFO     | ejecutar | --- Simulación 20: Sala: 4 argumentos (sobrecarga inexistente) ---
+2026-11-22 17:40:15,436 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] Se esperaban entre 1 y 3 argumentos y llegaron 4
+2026-11-22 17:40:15,436 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-22 17:40:15,436 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-22 17:40:15,436 | DEBUG    | crear_reserva | Intento de reserva #9 finalizado
+2026-11-22 17:40:15,436 | INFO     | ejecutar | --- Fin simulación 20 ---
+2026-11-22 17:40:15,436 | INFO     | ejecutar | --- Simulación 21: Sala: horas como texto ('dos') ---
+2026-11-22 17:40:15,436 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] 'horas' debe ser numérico, llegó 'dos'
+2026-11-22 17:40:15,436 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-22 17:40:15,436 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-22 17:40:15,436 | DEBUG    | crear_reserva | Intento de reserva #10 finalizado
+2026-11-22 17:40:15,436 | INFO     | ejecutar | --- Fin simulación 21 ---
+2026-11-22 17:40:15,436 | INFO     | ejecutar | --- Simulación 22: Equipo: stock insuficiente (10 de 5) ---
+2026-11-22 17:40:15,437 | ERROR    | confirmar | Confirmación fallida de reserva #6: [RESERVA_INVALIDA] Stock insuficiente de 'Portátil': piden 10, hay 5
+2026-11-22 17:40:15,437 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-22 17:40:15,437 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-22 17:40:15,437 | DEBUG    | crear_reserva | Intento de reserva #11 finalizado
+2026-11-22 17:40:15,437 | INFO     | ejecutar | --- Fin simulación 22 ---
+2026-11-22 17:40:15,437 | INFO     | ejecutar | --- Simulación 23: Asesoría: nivel desconocido ('gurú') ---
+2026-11-22 17:40:15,437 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] Nivel 'gurú' no existe; use basico, avanzado, experto
+2026-11-22 17:40:15,437 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-22 17:40:15,437 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-22 17:40:15,437 | DEBUG    | crear_reserva | Intento de reserva #12 finalizado
+2026-11-22 17:40:15,437 | INFO     | ejecutar | --- Fin simulación 23 ---
+2026-11-22 17:40:15,437 | INFO     | ejecutar | --- Simulación 24: Fecha con formato incorrecto ---
+2026-11-22 17:40:15,437 | ERROR    | crear_reserva | Reserva rechazada: [DATOS_INVALIDOS] Fecha inválida: '31/12/2026' (use AAAA-MM-DD)
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 80, in _convertir_fecha
+    return datetime.strptime(fecha_texto, "%Y-%m-%d").date()  # Valida formato AAAA-MM-DD
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\atenea12\AppData\Local\Python\pythoncore-3.15-64\Lib\_strptime.py", line 844, in _strptime_datetime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\atenea12\AppData\Local\Python\pythoncore-3.15-64\Lib\_strptime.py", line 574, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+                     (data_string, format))
+ValueError: time data '31/12/2026' does not match format '%Y-%m-%d'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 98, in crear_reserva
+    fecha = self._convertir_fecha(fecha_texto)  # 3) Condición: fecha con formato válido
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 83, in _convertir_fecha
+    raise DatosInvalidosError(f"Fecha inválida: {fecha_texto!r} (use AAAA-MM-DD)") from error
+excepciones.DatosInvalidosError: [DATOS_INVALIDOS] Fecha inválida: '31/12/2026' (use AAAA-MM-DD)
+2026-11-22 17:40:15,439 | DEBUG    | crear_reserva | Intento de reserva #13 finalizado
+2026-11-22 17:40:15,439 | INFO     | ejecutar | --- Fin simulación 24 ---
+2026-11-22 17:40:15,439 | INFO     | ejecutar | --- Simulación 25: Fecha pasada ---
+2026-11-22 17:40:15,439 | ERROR    | crear_reserva | Reserva rechazada: [RESERVA_INVALIDA] La fecha 2026-11-21 ya pasó
+2026-11-22 17:40:15,439 | DEBUG    | crear_reserva | Intento de reserva #14 finalizado
+2026-11-22 17:40:15,439 | INFO     | ejecutar | --- Fin simulación 25 ---
+2026-11-22 17:40:15,439 | INFO     | ejecutar | --- Simulación 26: Servicio inexistente (id 99) ---
+2026-11-22 17:40:15,439 | ERROR    | crear_reserva | Reserva rechazada: [SERVICIO_NO_DISPONIBLE] El servicio 99 no existe
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 71, in _obtener_servicio
+    return next(s for s in self.servicios if s.id == servicio_id)  # Busca coincidencia por ID
+StopIteration
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 97, in crear_reserva
+    servicio = self._obtener_servicio(servicio_id)  # 2) Condición: servicio existente
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 74, in _obtener_servicio
+    raise ServicioNoDisponibleError(f"El servicio {servicio_id} no existe") from error
+excepciones.ServicioNoDisponibleError: [SERVICIO_NO_DISPONIBLE] El servicio 99 no existe
+2026-11-22 17:40:15,440 | DEBUG    | crear_reserva | Intento de reserva #15 finalizado
+2026-11-22 17:40:15,440 | INFO     | ejecutar | --- Fin simulación 26 ---
+2026-11-22 17:40:15,440 | INFO     | ejecutar | --- Simulación 27: Cliente no registrado (id 77) ---
+2026-11-22 17:40:15,440 | ERROR    | crear_reserva | Reserva rechazada: [CLIENTE_NO_ENCONTRADO] El cliente 77 no está registrado
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 63, in _obtener_cliente
+    return next(c for c in self.clientes if c.id == cliente_id)  # Busca coincidencia por ID
+StopIteration
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 96, in crear_reserva
+    cliente = self._obtener_cliente(cliente_id)  # 1) Condición: cliente registrado
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 66, in _obtener_cliente
+    raise ClienteNoEncontradoError(f"El cliente {cliente_id} no está registrado") from error
+excepciones.ClienteNoEncontradoError: [CLIENTE_NO_ENCONTRADO] El cliente 77 no está registrado
+2026-11-22 17:40:15,441 | DEBUG    | crear_reserva | Intento de reserva #16 finalizado
+2026-11-22 17:40:15,441 | INFO     | ejecutar | --- Fin simulación 27 ---
+2026-11-22 17:40:15,441 | INFO     | ejecutar | --- Simulación 28: Servicio fuera de servicio ---
+2026-11-22 17:40:15,441 | ERROR    | crear_reserva | Reserva rechazada: [SERVICIO_NO_DISPONIBLE] 'Sala B (en mantenimiento)' está fuera de servicio
+2026-11-22 17:40:15,441 | DEBUG    | crear_reserva | Intento de reserva #17 finalizado
+2026-11-22 17:40:15,441 | INFO     | ejecutar | --- Fin simulación 28 ---
+2026-11-22 17:40:15,441 | INFO     | ejecutar | --- Simulación 29: Proveedor externo caído ---
+2026-11-22 17:40:15,442 | ERROR    | crear_reserva | Reserva rechazada: [SERVICIO_NO_DISPONIBLE] Proveedor de 'Asesoría externa' no disponible
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 105, in crear_reserva
+    self._llamar_proveedor(servicio)  # 5) Condición: proveedor externo responde
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 89, in _llamar_proveedor
+    raise ConnectionError(f"Sin respuesta del proveedor de '{servicio.nombre}'")
+ConnectionError: Sin respuesta del proveedor de 'Asesoría externa'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 108, in crear_reserva
+    raise ServicioNoDisponibleError(
+        f"Proveedor de '{servicio.nombre}' no disponible"
+    ) from error
+excepciones.ServicioNoDisponibleError: [SERVICIO_NO_DISPONIBLE] Proveedor de 'Asesoría externa' no disponible
+2026-11-22 17:40:15,442 | DEBUG    | crear_reserva | Intento de reserva #18 finalizado
+2026-11-22 17:40:15,442 | INFO     | ejecutar | --- Fin simulación 29 ---
+2026-11-22 17:40:15,442 | INFO     | ejecutar | --- Simulación 30: Reserva duplicada (Ana, sala, mismo día) ---
+2026-11-22 17:40:15,442 | ERROR    | crear_reserva | Reserva rechazada: [RESERVA_INVALIDA] Ana Pérez ya tiene una reserva ese día en 'Sala de juntas A'
+2026-11-22 17:40:15,443 | DEBUG    | crear_reserva | Intento de reserva #19 finalizado
+2026-11-22 17:40:15,443 | INFO     | ejecutar | --- Fin simulación 30 ---
+2026-11-22 17:40:15,443 | INFO     | ejecutar | --- Simulación 31: Cancelar reserva existente (#1) ---
+2026-11-22 17:40:15,444 | INFO     | cancelar | Reserva #1 cancelada
+2026-11-22 17:40:15,444 | DEBUG    | cancelar | Cancelación de reserva #1 finalizada
+2026-11-22 17:40:15,444 | INFO     | ejecutar | --- Fin simulación 31 ---
+2026-11-22 17:40:15,445 | INFO     | ejecutar | --- Simulación 32: Cancelar reserva inexistente (#42) ---
+2026-11-22 17:40:15,445 | ERROR    | cancelar_reserva | Cancelación fallida: [RESERVA_NO_ENCONTRADA] La reserva #42 no existe
+2026-11-22 17:40:15,445 | INFO     | ejecutar | --- Fin simulación 32 ---
+2026-11-22 17:40:15,445 | INFO     | ejecutar | --- Simulación 33: Cancelar reserva ya cancelada (#1) ---
+2026-11-22 17:40:15,445 | ERROR    | cancelar | Cancelación rechazada: [RESERVA_INVALIDA] La reserva #1 ya estaba cancelada
+2026-11-22 17:40:15,445 | DEBUG    | cancelar | Cancelación de reserva #1 finalizada
+2026-11-22 17:40:15,445 | INFO     | ejecutar | --- Fin simulación 33 ---
+2026-11-22 17:40:15,445 | INFO     | ejecutar | --- Simulación 34: Reserva nueva tras cancelar (misma sala y día) ---
+2026-11-22 17:40:15,445 | INFO     | confirmar | Reserva #6 confirmada: Ana Pérez en 'Sala de juntas A' el 2026-11-23, costo $40,000.00
+2026-11-22 17:40:15,446 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-22 17:40:15,446 | DEBUG    | crear_reserva | Intento de reserva #20 finalizado
+2026-11-22 17:40:15,446 | INFO     | ejecutar | --- Fin simulación 34 ---
+2026-11-22 17:40:15,446 | INFO     | ejecutar | --- Simulación 35: Fallo inesperado (división por cero) ---
+2026-11-22 17:40:15,446 | CRITICAL | ejecutar | Error inesperado en simulación 35
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\main.py", line 23, in ejecutar
+    resultado = funcion()  # Corre la simulación
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\main.py", line 116, in <lambda>
+    ("Fallo inesperado (división por cero)", lambda: 1 / 0),  # Provoca error no controlado para probar captura
+                                                     ~~^~~
+ZeroDivisionError: division by zero
+2026-11-22 17:40:15,447 | INFO     | ejecutar | --- Fin simulación 35 ---
+2026-11-24 21:32:21,637 | INFO     | __init__ | Sistema iniciado
+2026-11-24 21:32:21,637 | INFO     | registrar_cliente | Cliente registrado: Cliente #1: Ana Pérez (doc. 10203040)
+2026-11-24 21:32:21,637 | INFO     | registrar_cliente | Cliente registrado: Cliente #2: Luis Gómez (doc. 55667788)
+2026-11-24 21:32:21,637 | INFO     | registrar_servicio | Servicio registrado: Sala: Sala de juntas A (tarifa base $40,000.00, disponible), capacidad 10 personas
+2026-11-24 21:32:21,637 | INFO     | registrar_servicio | Servicio registrado: Equipo: Portátil (tarifa base $25,000.00, disponible), stock 5 unidades
+2026-11-24 21:32:21,638 | INFO     | registrar_servicio | Servicio registrado: Asesoria: Asesoría en Python (tarifa base $90,000.00, disponible)
+2026-11-24 21:32:21,638 | INFO     | registrar_servicio | Servicio registrado: Sala: Sala B (en mantenimiento) (tarifa base $30,000.00, fuera de servicio), capacidad 6 personas
+2026-11-24 21:32:21,638 | INFO     | registrar_servicio | Servicio registrado: Asesoria: Asesoría externa (tarifa base $80,000.00, disponible)
+2026-11-24 21:32:21,638 | INFO     | ejecutar | --- Simulación 01: Registrar cliente válido (Carlos Ruiz) ---
+2026-11-24 21:32:21,638 | INFO     | registrar_cliente | Cliente registrado: Cliente #3: Carlos Ruiz (doc. 99887766)
+2026-11-24 21:32:21,638 | INFO     | ejecutar | --- Fin simulación 01 ---
+2026-11-24 21:32:21,639 | INFO     | ejecutar | --- Simulación 02: Cliente con nombre inválido ('A1') ---
+2026-11-24 21:32:21,639 | ERROR    | ejecutar | Error controlado: [CLIENTE_INVALIDO] Nombre inválido: 'A1' (3 a 60 letras)
+2026-11-24 21:32:21,639 | INFO     | ejecutar | --- Fin simulación 02 ---
+2026-11-24 21:32:21,639 | INFO     | ejecutar | --- Simulación 03: Cliente con correo inválido ---
+2026-11-24 21:32:21,639 | ERROR    | ejecutar | Error controlado: [CLIENTE_INVALIDO] Correo inválido: 'sin-arroba'
+2026-11-24 21:32:21,639 | INFO     | ejecutar | --- Fin simulación 03 ---
+2026-11-24 21:32:21,639 | INFO     | ejecutar | --- Simulación 04: Cliente con teléfono inválido ---
+2026-11-24 21:32:21,639 | ERROR    | ejecutar | Error controlado: [CLIENTE_INVALIDO] Teléfono inválido: '12345' (10 dígitos, inicia en 3)
+2026-11-24 21:32:21,639 | INFO     | ejecutar | --- Fin simulación 04 ---
+2026-11-24 21:32:21,639 | INFO     | ejecutar | --- Simulación 05: Cliente con documento inválido ---
+2026-11-24 21:32:21,639 | ERROR    | ejecutar | Error controlado: [CLIENTE_INVALIDO] Documento inválido: '12ab' (5 a 12 dígitos)
+2026-11-24 21:32:21,639 | INFO     | ejecutar | --- Fin simulación 05 ---
+2026-11-24 21:32:21,639 | INFO     | ejecutar | --- Simulación 06: Registrar cliente con id repetido ---
+2026-11-24 21:32:21,639 | ERROR    | ejecutar | Error controlado: [DATOS_INVALIDOS] Ya existe un cliente con id 1
+2026-11-24 21:32:21,639 | INFO     | ejecutar | --- Fin simulación 06 ---
+2026-11-24 21:32:21,640 | INFO     | ejecutar | --- Simulación 07: Crear servicio válido (Proyector) ---
+2026-11-24 21:32:21,640 | INFO     | registrar_servicio | Servicio registrado: Equipo: Proyector (tarifa base $40,000.00, disponible), stock 3 unidades
+2026-11-24 21:32:21,640 | INFO     | ejecutar | --- Fin simulación 07 ---
+2026-11-24 21:32:21,640 | INFO     | ejecutar | --- Simulación 08: Crear servicio con tarifa negativa ---
+2026-11-24 21:32:21,640 | ERROR    | ejecutar | Error controlado: [PARAMETRO_INVALIDO] 'tarifa_base' debe ser mayor que cero, llegó -100
+2026-11-24 21:32:21,640 | INFO     | ejecutar | --- Fin simulación 08 ---
+2026-11-24 21:32:21,640 | INFO     | ejecutar | --- Simulación 09: Crear servicio con nombre vacío ---
+2026-11-24 21:32:21,640 | ERROR    | ejecutar | Error controlado: [DATOS_INVALIDOS] El nombre del servicio es obligatorio
+2026-11-24 21:32:21,640 | INFO     | ejecutar | --- Fin simulación 09 ---
+2026-11-24 21:32:21,640 | INFO     | ejecutar | --- Simulación 10: Crear servicio con tarifa como texto ---
+2026-11-24 21:32:21,640 | ERROR    | ejecutar | Error controlado: [DATOS_INVALIDOS] 'tarifa_dia' debe ser numérico, llegó 'barata'
+2026-11-24 21:32:21,640 | INFO     | ejecutar | --- Fin simulación 10 ---
+2026-11-24 21:32:21,640 | INFO     | ejecutar | --- Simulación 11: Instanciar la clase abstracta Servicio ---
+2026-11-24 21:32:21,640 | ERROR    | ejecutar | Error controlado: [ERR_GENERAL] Servicio es abstracta y no se puede instanciar
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\main.py", line 48, in instanciar_abstracta
+    Servicio(99, "Servicio genérico", 1000)  # TypeError: clase abstracta
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Can't instantiate abstract class Servicio without an implementation for abstract methods 'calcular_costo', 'validar_parametros'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\main.py", line 23, in ejecutar
+    resultado = funcion()  # Corre la simulación
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\main.py", line 50, in instanciar_abstracta
+    raise ErrorReservas("Servicio es abstracta y no se puede instanciar") from error  # Convierte y encadena el error
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+excepciones.ErrorReservas: [ERR_GENERAL] Servicio es abstracta y no se puede instanciar
+2026-11-24 21:32:21,735 | INFO     | ejecutar | --- Fin simulación 11 ---
+2026-11-24 21:32:21,735 | INFO     | ejecutar | --- Simulación 12: Sala: 2 horas (1 argumento) ---
+2026-11-24 21:32:21,742 | INFO     | confirmar | Reserva #1 confirmada: Ana Pérez en 'Sala de juntas A' el 2026-11-25, costo $80,000.00
+2026-11-24 21:32:21,742 | DEBUG    | confirmar | Confirmación de reserva #1 finalizada
+2026-11-24 21:32:21,742 | DEBUG    | crear_reserva | Intento de reserva #1 finalizado
+2026-11-24 21:32:21,742 | INFO     | ejecutar | --- Fin simulación 12 ---
+2026-11-24 21:32:21,742 | INFO     | ejecutar | --- Simulación 13: Sala: 3 h con 10 % descuento (2 argumentos) ---
+2026-11-24 21:32:21,743 | INFO     | confirmar | Reserva #2 confirmada: Luis Gómez en 'Sala de juntas A' el 2026-11-26, costo $108,000.00
+2026-11-24 21:32:21,743 | DEBUG    | confirmar | Confirmación de reserva #2 finalizada
+2026-11-24 21:32:21,743 | DEBUG    | crear_reserva | Intento de reserva #2 finalizado
+2026-11-24 21:32:21,743 | INFO     | ejecutar | --- Fin simulación 13 ---
+2026-11-24 21:32:21,743 | INFO     | ejecutar | --- Simulación 14: Sala: 4 h, 10 % desc. e IVA 19 % (3 argumentos) ---
+2026-11-24 21:32:21,743 | INFO     | confirmar | Reserva #3 confirmada: Ana Pérez en 'Sala de juntas A' el 2026-11-27, costo $171,360.00
+2026-11-24 21:32:21,743 | DEBUG    | confirmar | Confirmación de reserva #3 finalizada
+2026-11-24 21:32:21,743 | DEBUG    | crear_reserva | Intento de reserva #3 finalizado
+2026-11-24 21:32:21,743 | INFO     | ejecutar | --- Fin simulación 14 ---
+2026-11-24 21:32:21,743 | INFO     | ejecutar | --- Simulación 15: Equipo: 3 días, 2 unidades, con seguro ---
+2026-11-24 21:32:21,744 | INFO     | confirmar | Reserva #4 confirmada: Ana Pérez en 'Portátil' el 2026-11-25, costo $165,000.00
+2026-11-24 21:32:21,744 | DEBUG    | confirmar | Confirmación de reserva #4 finalizada
+2026-11-24 21:32:21,744 | DEBUG    | crear_reserva | Intento de reserva #4 finalizado
+2026-11-24 21:32:21,744 | INFO     | ejecutar | --- Fin simulación 15 ---
+2026-11-24 21:32:21,744 | INFO     | ejecutar | --- Simulación 16: Asesoría: 2 h, nivel experto, urgente ---
+2026-11-24 21:32:21,744 | INFO     | confirmar | Reserva #5 confirmada: Luis Gómez en 'Asesoría en Python' el 2026-11-25, costo $450,000.00
+2026-11-24 21:32:21,744 | DEBUG    | confirmar | Confirmación de reserva #5 finalizada
+2026-11-24 21:32:21,744 | DEBUG    | crear_reserva | Intento de reserva #5 finalizado
+2026-11-24 21:32:21,744 | INFO     | ejecutar | --- Fin simulación 16 ---
+2026-11-24 21:32:21,744 | INFO     | ejecutar | --- Simulación 17: Sala: horas negativas ---
+2026-11-24 21:32:21,744 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] 'horas' debe ser mayor que cero, llegó -2
+2026-11-24 21:32:21,744 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-24 21:32:21,744 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-24 21:32:21,744 | DEBUG    | crear_reserva | Intento de reserva #6 finalizado
+2026-11-24 21:32:21,744 | INFO     | ejecutar | --- Fin simulación 17 ---
+2026-11-24 21:32:21,745 | INFO     | ejecutar | --- Simulación 18: Sala: más de 12 horas ---
+2026-11-24 21:32:21,745 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] 'horas' no puede superar 12, llegó 15
+2026-11-24 21:32:21,745 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-24 21:32:21,745 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-24 21:32:21,745 | DEBUG    | crear_reserva | Intento de reserva #7 finalizado
+2026-11-24 21:32:21,745 | INFO     | ejecutar | --- Fin simulación 18 ---
+2026-11-24 21:32:21,745 | INFO     | ejecutar | --- Simulación 19: Sala: descuento fuera de rango (150 %) ---
+2026-11-24 21:32:21,745 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] 'descuento' debe estar entre 0 y 1, llegó 1.5
+2026-11-24 21:32:21,745 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-24 21:32:21,745 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-24 21:32:21,745 | DEBUG    | crear_reserva | Intento de reserva #8 finalizado
+2026-11-24 21:32:21,745 | INFO     | ejecutar | --- Fin simulación 19 ---
+2026-11-24 21:32:21,745 | INFO     | ejecutar | --- Simulación 20: Sala: 4 argumentos (sobrecarga inexistente) ---
+2026-11-24 21:32:21,745 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] Se esperaban entre 1 y 3 argumentos y llegaron 4
+2026-11-24 21:32:21,745 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-24 21:32:21,745 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-24 21:32:21,745 | DEBUG    | crear_reserva | Intento de reserva #9 finalizado
+2026-11-24 21:32:21,745 | INFO     | ejecutar | --- Fin simulación 20 ---
+2026-11-24 21:32:21,745 | INFO     | ejecutar | --- Simulación 21: Sala: horas como texto ('dos') ---
+2026-11-24 21:32:21,746 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] 'horas' debe ser numérico, llegó 'dos'
+2026-11-24 21:32:21,746 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-24 21:32:21,746 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-24 21:32:21,746 | DEBUG    | crear_reserva | Intento de reserva #10 finalizado
+2026-11-24 21:32:21,746 | INFO     | ejecutar | --- Fin simulación 21 ---
+2026-11-24 21:32:21,746 | INFO     | ejecutar | --- Simulación 22: Equipo: stock insuficiente (10 de 5) ---
+2026-11-24 21:32:21,746 | ERROR    | confirmar | Confirmación fallida de reserva #6: [RESERVA_INVALIDA] Stock insuficiente de 'Portátil': piden 10, hay 5
+2026-11-24 21:32:21,746 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-24 21:32:21,746 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-24 21:32:21,746 | DEBUG    | crear_reserva | Intento de reserva #11 finalizado
+2026-11-24 21:32:21,746 | INFO     | ejecutar | --- Fin simulación 22 ---
+2026-11-24 21:32:21,746 | INFO     | ejecutar | --- Simulación 23: Asesoría: nivel desconocido ('gurú') ---
+2026-11-24 21:32:21,746 | ERROR    | confirmar | Confirmación fallida de reserva #6: [PARAMETRO_INVALIDO] Nivel 'gurú' no existe; use basico, avanzado, experto
+2026-11-24 21:32:21,746 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-24 21:32:21,746 | ERROR    | procesar | Procesamiento fallido de reserva #6
+2026-11-24 21:32:21,746 | DEBUG    | crear_reserva | Intento de reserva #12 finalizado
+2026-11-24 21:32:21,746 | INFO     | ejecutar | --- Fin simulación 23 ---
+2026-11-24 21:32:21,746 | INFO     | ejecutar | --- Simulación 24: Fecha con formato incorrecto ---
+2026-11-24 21:32:21,747 | ERROR    | crear_reserva | Reserva rechazada: [DATOS_INVALIDOS] Fecha inválida: '31/12/2026' (use AAAA-MM-DD)
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 80, in _convertir_fecha
+    return datetime.strptime(fecha_texto, "%Y-%m-%d").date()  # Valida formato AAAA-MM-DD
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\atenea12\AppData\Local\Python\pythoncore-3.15-64\Lib\_strptime.py", line 844, in _strptime_datetime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\atenea12\AppData\Local\Python\pythoncore-3.15-64\Lib\_strptime.py", line 574, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+                     (data_string, format))
+ValueError: time data '31/12/2026' does not match format '%Y-%m-%d'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 98, in crear_reserva
+    fecha = self._convertir_fecha(fecha_texto)  # 3) Condición: fecha con formato válido
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 83, in _convertir_fecha
+    raise DatosInvalidosError(f"Fecha inválida: {fecha_texto!r} (use AAAA-MM-DD)") from error
+excepciones.DatosInvalidosError: [DATOS_INVALIDOS] Fecha inválida: '31/12/2026' (use AAAA-MM-DD)
+2026-11-24 21:32:21,769 | DEBUG    | crear_reserva | Intento de reserva #13 finalizado
+2026-11-24 21:32:21,769 | INFO     | ejecutar | --- Fin simulación 24 ---
+2026-11-24 21:32:21,769 | INFO     | ejecutar | --- Simulación 25: Fecha pasada ---
+2026-11-24 21:32:21,770 | ERROR    | crear_reserva | Reserva rechazada: [RESERVA_INVALIDA] La fecha 2026-11-23 ya pasó
+2026-11-24 21:32:21,770 | DEBUG    | crear_reserva | Intento de reserva #14 finalizado
+2026-11-24 21:32:21,770 | INFO     | ejecutar | --- Fin simulación 25 ---
+2026-11-24 21:32:21,770 | INFO     | ejecutar | --- Simulación 26: Servicio inexistente (id 99) ---
+2026-11-24 21:32:21,770 | ERROR    | crear_reserva | Reserva rechazada: [SERVICIO_NO_DISPONIBLE] El servicio 99 no existe
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 71, in _obtener_servicio
+    return next(s for s in self.servicios if s.id == servicio_id)  # Busca coincidencia por ID
+StopIteration
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 97, in crear_reserva
+    servicio = self._obtener_servicio(servicio_id)  # 2) Condición: servicio existente
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 74, in _obtener_servicio
+    raise ServicioNoDisponibleError(f"El servicio {servicio_id} no existe") from error
+excepciones.ServicioNoDisponibleError: [SERVICIO_NO_DISPONIBLE] El servicio 99 no existe
+2026-11-24 21:32:21,771 | DEBUG    | crear_reserva | Intento de reserva #15 finalizado
+2026-11-24 21:32:21,771 | INFO     | ejecutar | --- Fin simulación 26 ---
+2026-11-24 21:32:21,771 | INFO     | ejecutar | --- Simulación 27: Cliente no registrado (id 77) ---
+2026-11-24 21:32:21,771 | ERROR    | crear_reserva | Reserva rechazada: [CLIENTE_NO_ENCONTRADO] El cliente 77 no está registrado
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 63, in _obtener_cliente
+    return next(c for c in self.clientes if c.id == cliente_id)  # Busca coincidencia por ID
+StopIteration
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 96, in crear_reserva
+    cliente = self._obtener_cliente(cliente_id)  # 1) Condición: cliente registrado
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 66, in _obtener_cliente
+    raise ClienteNoEncontradoError(f"El cliente {cliente_id} no está registrado") from error
+excepciones.ClienteNoEncontradoError: [CLIENTE_NO_ENCONTRADO] El cliente 77 no está registrado
+2026-11-24 21:32:21,771 | DEBUG    | crear_reserva | Intento de reserva #16 finalizado
+2026-11-24 21:32:21,771 | INFO     | ejecutar | --- Fin simulación 27 ---
+2026-11-24 21:32:21,772 | INFO     | ejecutar | --- Simulación 28: Servicio fuera de servicio ---
+2026-11-24 21:32:21,772 | ERROR    | crear_reserva | Reserva rechazada: [SERVICIO_NO_DISPONIBLE] 'Sala B (en mantenimiento)' está fuera de servicio
+2026-11-24 21:32:21,772 | DEBUG    | crear_reserva | Intento de reserva #17 finalizado
+2026-11-24 21:32:21,772 | INFO     | ejecutar | --- Fin simulación 28 ---
+2026-11-24 21:32:21,772 | INFO     | ejecutar | --- Simulación 29: Proveedor externo caído ---
+2026-11-24 21:32:21,772 | ERROR    | crear_reserva | Reserva rechazada: [SERVICIO_NO_DISPONIBLE] Proveedor de 'Asesoría externa' no disponible
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 105, in crear_reserva
+    self._llamar_proveedor(servicio)  # 5) Condición: proveedor externo responde
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 89, in _llamar_proveedor
+    raise ConnectionError(f"Sin respuesta del proveedor de '{servicio.nombre}'")
+ConnectionError: Sin respuesta del proveedor de 'Asesoría externa'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\sistema_reservas.py", line 108, in crear_reserva
+    raise ServicioNoDisponibleError(
+        f"Proveedor de '{servicio.nombre}' no disponible"
+    ) from error
+excepciones.ServicioNoDisponibleError: [SERVICIO_NO_DISPONIBLE] Proveedor de 'Asesoría externa' no disponible
+2026-11-24 21:32:21,773 | DEBUG    | crear_reserva | Intento de reserva #18 finalizado
+2026-11-24 21:32:21,773 | INFO     | ejecutar | --- Fin simulación 29 ---
+2026-11-24 21:32:21,773 | INFO     | ejecutar | --- Simulación 30: Reserva duplicada (Ana, sala, mismo día) ---
+2026-11-24 21:32:21,773 | ERROR    | crear_reserva | Reserva rechazada: [RESERVA_INVALIDA] Ana Pérez ya tiene una reserva ese día en 'Sala de juntas A'
+2026-11-24 21:32:21,773 | DEBUG    | crear_reserva | Intento de reserva #19 finalizado
+2026-11-24 21:32:21,773 | INFO     | ejecutar | --- Fin simulación 30 ---
+2026-11-24 21:32:21,773 | INFO     | ejecutar | --- Simulación 31: Cancelar reserva existente (#1) ---
+2026-11-24 21:32:21,773 | INFO     | cancelar | Reserva #1 cancelada
+2026-11-24 21:32:21,773 | DEBUG    | cancelar | Cancelación de reserva #1 finalizada
+2026-11-24 21:32:21,773 | INFO     | ejecutar | --- Fin simulación 31 ---
+2026-11-24 21:32:21,773 | INFO     | ejecutar | --- Simulación 32: Cancelar reserva inexistente (#42) ---
+2026-11-24 21:32:21,774 | ERROR    | cancelar_reserva | Cancelación fallida: [RESERVA_NO_ENCONTRADA] La reserva #42 no existe
+2026-11-24 21:32:21,774 | INFO     | ejecutar | --- Fin simulación 32 ---
+2026-11-24 21:32:21,774 | INFO     | ejecutar | --- Simulación 33: Cancelar reserva ya cancelada (#1) ---
+2026-11-24 21:32:21,774 | ERROR    | cancelar | Cancelación rechazada: [RESERVA_INVALIDA] La reserva #1 ya estaba cancelada
+2026-11-24 21:32:21,774 | DEBUG    | cancelar | Cancelación de reserva #1 finalizada
+2026-11-24 21:32:21,774 | INFO     | ejecutar | --- Fin simulación 33 ---
+2026-11-24 21:32:21,774 | INFO     | ejecutar | --- Simulación 34: Reserva nueva tras cancelar (misma sala y día) ---
+2026-11-24 21:32:21,774 | INFO     | confirmar | Reserva #6 confirmada: Ana Pérez en 'Sala de juntas A' el 2026-11-25, costo $40,000.00
+2026-11-24 21:32:21,774 | DEBUG    | confirmar | Confirmación de reserva #6 finalizada
+2026-11-24 21:32:21,774 | DEBUG    | crear_reserva | Intento de reserva #20 finalizado
+2026-11-24 21:32:21,774 | INFO     | ejecutar | --- Fin simulación 34 ---
+2026-11-24 21:32:21,774 | INFO     | ejecutar | --- Simulación 35: Fallo inesperado (división por cero) ---
+2026-11-24 21:32:21,774 | CRITICAL | ejecutar | Error inesperado en simulación 35
+Traceback (most recent call last):
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\main.py", line 23, in ejecutar
+    resultado = funcion()  # Corre la simulación
+  File "C:\Users\atenea12\Desktop\Proyecto\Sistema-Gestion-Software-FJ\main.py", line 116, in <lambda>
+    ("Fallo inesperado (división por cero)", lambda: 1 / 0),  # Provoca error no controlado para probar captura
+                                                     ~~^~~
+ZeroDivisionError: division by zero
+2026-11-24 21:32:21,775 | INFO     | ejecutar | --- Fin simulación 35 ---
