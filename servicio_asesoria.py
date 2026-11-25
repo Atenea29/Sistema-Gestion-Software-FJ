@@ -76,4 +76,4 @@ class AsesoriaEspecializada(Servicio):
 
     def describir(self):
         """Devuelve una descripción del servicio de asesoría."""
-        return f"Asesoría: {super().describir()}
+        return f"Asesoria: {super().describir()}"
